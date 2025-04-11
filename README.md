@@ -74,7 +74,8 @@ binary.
 
 There are three obvious exits: port0, port1 and port2.
 
-> ??go port0 
+> ??go port0
+
 Upstream, before you, you see a luminous gateway and, beyond it, a
 vast expanse of swirling data currents stretching out into what seems
 to be infinity. This place seems to be a border between two very
@@ -127,6 +128,7 @@ ascend to loftier levels.
 There are two obvious exits: up and upstream.
 
 > ??up
+
 A Stressed technician examines you carefully.
 A Stressed technician lets you pass upward.manipi
 
@@ -144,6 +146,7 @@ There are three obvious exits: up, down and gi0/1.
 A stern security guard."
 
 > ??up
+
 A Stern security guard eyes you with a practiced and suspicious gaze.
 A Stern security guard says: Your identification seems to be in order. Welcome!
 A Stern security guard steps aside and lets you through.
@@ -162,12 +165,14 @@ A diligent security officer.
 
 there are signs here; 
 > ??exa large sign
+
 .---------------------------------------------------------------------------.
 | Entrance to Gi0/0 - Take care! Here be monsters!                          |
 |                     Hazardous conditions exist. Travel at your own risk!  |
 '---------------------------------------------------------------------------'
 
 > ??exa small sign
+
 .----------------------------------------------------------------.
 | Entrance to Gi0/2 - Only authorized packets beyond this point. |
 '----------------------------------------------------------------'
@@ -197,6 +202,7 @@ Security officer arrives.
 goSecurity officer says: Have you seen any suspicious packets in the area?
 
 > ??go downstream
+
 You are drifting through what appears to be a tunnel, though calling
 it that might be a bit generous. The walls, floor, and ceiling are all
 of the circular variety, or they would be if they were solid, which
@@ -938,6 +944,7 @@ There are two obvious exits: up and downstream.
 A stressed technician.
 
 > ??downstream
+
 You find yourself in a corridor that hums with a serene energy, like a
 place where data and purpose meld into a tranquil dance. The
 surroundings are a gentle blend of soft hues and faint glows, with
@@ -1230,6 +1237,7 @@ port1 is the work station
 port2 is the "admin"
 
 > ??port3
+
 *(and up to IP layer)
 
 This room has an air of barely-contained chaos, with large bundles of
