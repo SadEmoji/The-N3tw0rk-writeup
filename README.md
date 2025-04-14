@@ -1,8 +1,137 @@
 # The-N3tw0rk-writeup
 Writeup for undutmaning ctf challenge "The N3tw0rk" 
 <hr>
+# How i did it
 
 "You are a packet floating in the memory in a process."
+
+On the side i took a lot of notes(11 503 words) and made a sketch of the network.
+
+You start of and the first and maybe most important clue is the terminal.
+There you find the ip addresses of servers for NS, Mail and HTTP and "A".
+
+
+First i went exploring and just checked where i could go and where i could not and also what you could find.
+I went down couldnt get up and kept going down.
+I the found the blackboard in the transportation layer with more ip-addresses and mac address.
+I went down couldnt get up and kept going down til the first switch.
+Port0 went back up, port1 ment death and port2 got me to hell? wich a bit later i figured out was a firewall and not a representation of hell.
+
+
+This i where i saw the clues on the discord wich helped. 
+request help was a big one and request list of headers.
+used help topics a bit to figure out the diffrences from Genesis MUD.
+
+
+when i started to figure out a stuff i tought a packet that should go thu the firewall is for the email.
+I had the dst-address of the email and i searched the net for a common port for emails
+
+wich is port 25(https://wiki.wireshark.org/SMTP)
+
+i restarted the game, took on a tcp header, set the correct dst port=25 tried to request checksum but it could not be calculated...
+" Checksum of the packet (IP header, TCP header and data).  "
+
+Then went down took on a IP header, entered the correct dst-address requested correct source address and requested checksum
+
+
+still couldnt get up to get checksum on the tcp header. So i kept going down.
+I requested a list of headers, requested correct source address, added the dst mac address from the blackboard and tried to request checksum but it did not work...
+Went down to the switch and to port2 and to the firewall, i couldnt get thru.
+
+
+restarded the game again(did this a lot), and i did the same for tcp and ip but for ethernet i took mac address from the blackboard in the transportion layer and put it as source.
+put the mac address from the arptable(00:03:32:F2:33:21) as mac-address as dst.
+went down and up the firewall and got thru gi0/1! 
+Now i found a gi0/2 and gi0/0(this goes back thru the firewall) but could also go down.
+
+
+I could not get thru gi0/2.. so i went down.
+found a second switch with more ports and a dangerous security officer that sometimes zapped me to death(never figured out how to travel safely here, so did a sonic and went fast thru)
+
+
+Now i was stuck again... i tought i tried it all and after a few hours i asked for help on the discord.
+"hur en switch hanterar olika MAC adresser." - how a switch handles mac addresses
+
+I tried a few here aa:aa:aa:aa:aa:aa (unkown) and 00:00:00:00:00:00(localhost) but the one i found worked in the second switch was FF:FF:FF:FF:FF:FF(broadcast)
+
+
+with the broadcast mac i could get in to the ports, and as i thought port0 is back up to the firewall.
+I starded with port1 and tried to figure out what it was, i could go up one to the transportation layer but when i first tried i could not get up from transportation layer.
+
+
+When down and up to port2 again got up to the transportation layer but could not get up to the top. 
+Found that the shirt on the NPC on the transportation layer said IPS(intrusion prevention system) so this is the source of the security officer, good to know but dont help me anywhere.
+
+
+Went down to the switch and up port3 same thing again up to transportation layer but not any further.
+
+
+And again went down to the switch and up to the last port port4.
+here i tried to manipulate source address on the ip header but then i couldnt get a checksum.
+tried to spoof a loop by request the correct source address and use the same ip address as dst, then i could get a checksum and get up to the ports like the smtp port 25 och POP3 port 110.
+I could at the first tries not get in to the ports but then i changed the dst port in the tcp header and when i now had ip header i also could get checksums!
+
+Now i got in the ports!
+
+
+port 25 was described as old and mostly a passthrough
+so i went down and up to port 110(changed the dst port and checksum again)
+
+I had to figure out how to look in the mailbox and after a lot of testing with words finally when i tried "investigate mailbox" the game said you could search it.
+Here i found a breakthru with the email threads!
+
+figured out i needed to find the/a printer! 
+
+
+This is where i got stuck again, trying to look for clues everywhere.
+Finaly after a lot of restarts and death from the security guard i looked in the NS(name server), found clues about that there was a internal network(probably behind gi0/2) with a print server!
+
+But masking as a ipp packet(https://wiki.wireshark.org/IPP) dint get me thru gi0/2...
+When googeling the ports from port1(second switch) i found that 1080 was a proxy port for SOCKS 
+And when looking at the clipboard from the supervisor in i found;
+
+"tcp       198.51.100.33:1080      198.51.100.199:43891    ESTABLISHED"
+
+This was the way thru gi0/2!
+
+So i changed the dst and src ports on the tcp header, requested checksum.
+Went down and changed the ip header, already got the correct soruce address. Changed the dst address and got  a new checksum.
+
+got down to the switch en out thru port0 and back up to gi0/2 and got thru!
+
+
+I could get down to another switch and port0 again is back where i came from. 
+now i went thru all the ports again and got up so i could se the active ports on each port/ip address. 
+Found the printer on port3 in the switch with and open port for 631.
+
+I couldnt get in to the printer with the existing source addresses i had.
+
+
+I had to get to the workstation first 
+
+I had the correct source to get in the workstation thru port 43891. 
+Then i started testing the printer as a source to get in to the workstation, and i could get in to the port 55643 wich turned out to be the print spool.
+
+here i fumbled again and got hung up on the print requests... 
+
+But after a lot of searching i tested to switch up the src and dst so i went from the print spool to the printer and i got in!
+
+here i fumbled again and missed the blobs... 
+
+went thru the clues pushed the boxes but did not look at the blobs... 
+
+
+I went thru the rest of the ports and clues and mapped the network, wich was fun in its own way.
+found more way thru gi0/2
+
+after a day i went back to the printer and saw blobs in the text.
+Tried inspect blobs but the director said "The art director says: No, no, no! No touching the artwork!".
+
+So i tried pushing the boxes a few times thinking that might help.
+I noticed that you could do stuff while the director picked up the boxes.
+
+This how i found the flag,
+
 
 <hr>
 
