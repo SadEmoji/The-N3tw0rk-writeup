@@ -13,80 +13,155 @@ Writeup for undutmaning ctf challenge "The N3tw0rk"
 *Steps to complete the game
 
 255
+
 y
+
 down
+
 request tcp
+
 manipulate tcp header src:31337
+
 manipulate tcp header dst:25
+
 down
+
 request ip
+
 manipulate ip header dst:198.51.100.25
+
 request correct source address
+
 request checksum
+
 down
+
 request ethernet
+
 manipulate ethernet header dst-address:FF:FF:FF:FF:FF:FF
+
 manipulate ethernet header src-address:E0:2C:B2:01:C0:A2
+
 request checksum
+
 upstream
+
 upstream
+
 port2
+
 downstream
+
 up
+
 gi0/1
+
 down
+
 downstream
+
 downstream
+
 port1
+
 downstream
+
 up
+
 up
+
 request correct source address
+
 manipulate ip header dst:198.51.100.33
+
 request checksum
+
 up
+
 manipulate tcp header src:1080
+
 manipulate tcp header dst:43891
+
 request checksum
+
 down
+
 manipulate ip header dst:198.51.100.199
+
 request checksum
+
 down
+
 upstream
+
 upstream
+
 port0
+
 upstream
+
 upstream
+
 up
+
 up
+
 gi0/2
+
 down
+
 down
+
 downstream
+
 downstream
+
 port1
+
 downstream
+
 up
+
 request correct source address
+
 manipulate ip header dst:198.51.100.199
+
 request checksum
+
 up
+
 manipulate tcp header src:55643
+
 manipulate tcp header dst:631
+
 request checksum
+
 down
+
 request correct source address
+
 manipulate ip header dst:198.51.100.182
+
 request checksum
+
 down
+
 upstream
+
 upstream
+
 port3
+
 downstream
+
 up
+
 up
+
 request checksum
+
 631
+
 push boxes
 
 `During the time when the director picks up the boxes;
